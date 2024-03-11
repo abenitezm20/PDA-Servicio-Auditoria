@@ -1,5 +1,5 @@
 from src.auditoria.modulos.auditoria.aplicacion.mapeadores import MapeadorPropiedadDTOJson
-from auditoria.modulos.auditoria.aplicacion.comandos.crear_propiedad import RegistrarPropiedad
+from src.auditoria.modulos.auditoria.aplicacion.comandos.crear_propiedad import RegistrarPropiedad
 from src.auditoria.modulos.auditoria.infraestructura.despachadores import Despachador
 from src.auditoria.seedwork.aplicacion.comandos import ejecutar_comando
 from src.auditoria.seedwork.aplicacion.handlers import Handler

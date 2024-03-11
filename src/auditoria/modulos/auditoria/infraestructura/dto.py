@@ -8,9 +8,13 @@ class Propiedad(Base):
     coordenadas = Column(String)
     direccion = Column(String)
     fecha_creacion = Column(String)
+    fecha_actualizacion = Column(String)
+    propiedad_id = Column(String)
 
-    def __init__(self, nombre, coordenadas, direccion, fecha_creacion):
+    def __init__(self, nombre, coordenadas, direccion, fecha_creacion, propiedad_id):
         self.nombre = nombre
         self.coordenadas = coordenadas
         self.direccion = direccion
         self.fecha_creacion = fecha_creacion
+        self.fecha_actualizacion = fecha_creacion
+        self.propiedad_id = propiedad_id

@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
-from auditoria.conf.errors import ApiError
-from auditoria.conf.db import init_db
+from src.auditoria.conf.errors import ApiError
+from src.auditoria.conf.db import init_db
 from .auditoria import ba
 
 app = Flask(__name__)

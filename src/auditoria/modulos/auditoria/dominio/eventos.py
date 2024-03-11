@@ -5,8 +5,9 @@ from src.auditoria.seedwork.dominio.eventos import (EventoDominio)
 
 @dataclass
 class PropiedadRegistrada(EventoDominio):
-    id: int = None
+    propiedad_id: str = None
     nombre: str = None
     coordenadas: str = None
     direccion: str = None
     fecha_creacion: str = None
+    fecha_actualizacion: str = None

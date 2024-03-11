@@ -1,9 +1,9 @@
 from flask import Blueprint, Response, request
-from auditoria.modulos.auditoria.aplicacion.queries.obtener_propiedad import ObtenerPropiedad
-from auditoria.modulos.auditoria.aplicacion.mapeadores import MapeadorPropiedadDTOJson
-from auditoria.seedwork.aplicacion.queries import ejecutar_query
+from src.auditoria.modulos.auditoria.aplicacion.queries.obtener_propiedad import ObtenerPropiedad
+from src.auditoria.modulos.auditoria.aplicacion.mapeadores import MapeadorPropiedadDTOJson
+from src.auditoria.seedwork.aplicacion.queries import ejecutar_query
 
-from auditoria.modulos.auditoria.infraestructura.despachadores import Despachador
+from src.auditoria.modulos.auditoria.infraestructura.despachadores import Despachador
 
 ba = Blueprint('auditoria', __name__)
 

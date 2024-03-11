@@ -27,29 +27,31 @@ class ProyeccionRegistrarPropiedad(ProyeccionPropiedad):
         self.coordenadas = coordenadas
         self.direccion = direccion
         self.fecha_creacion = fecha_creacion
+        self.fecha_actualizacion = fecha_creacion
 
     def ejecutar(self, db=None):
         if not db:
             print('ERROR: DB del app no puede ser nula')
             return
 
-        print('Ejecutando proyección de catastro...')
-        time.sleep(10)
+        print('Ejecutando proyección de auditoria...')
+        time.sleep(2)
         fabrica_repositorio = FabricaRepositorio()
         repositorio = fabrica_repositorio.crear_objeto(
             RepositorioPropiedadSQL.__class__)
-        repositorio.agregar(
-            Propiedad(nombre=self.nombre,
+        propiedad = Propiedad(nombre=self.nombre,
                               coordenadas=self.coordenadas,
                               direccion=self.direccion,
-                              fecha_creacion=self.fecha_creacion))
+                              fecha_creacion=self.fecha_creacion)
+        print('propiedad: ', propiedad)
+        repositorio.agregar(propiedad)
         db.commit()
 
-        evento = PropiedadRegistrada(propiedad_id=self.id,
-                                             nombre=self.nombre,
-                                             coordenadas=self.coordenadas,
-                                             direccion=self.direccion,
-                                             fecha_creacion=self.fecha_creacion)
+        evento = PropiedadRegistrada(propiedad_id=propiedad.propiedad_id,
+                                             nombre=propiedad.nombre,
+                                             coordenadas=propiedad.coordenadas,
+                                             direccion=propiedad.direccion,
+                                             fecha_creacion=propiedad.fecha_creacion)
         despachador = Despachador()
         despachador.publicar_evento(evento, 'eventos-auditoria')
         print('Proyección de auditoria ejecutada!')

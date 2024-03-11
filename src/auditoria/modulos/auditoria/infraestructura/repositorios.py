@@ -17,7 +17,7 @@ class RepositorioPropiedadSQL(RepositorioPropiedad):
         return self._fabrica_propiedad
 
     def obtener_por_id(self, id: UUID) -> Propiedad:
-        propiedad_dto = db_session.query(PropiedadDTO).filter_by(propiedad_id=str(id)).one()
+        propiedad_dto = db_session.query(PropiedadDTO).filter_by(id=str(id)).one()
         return self._fabrica_propiedad.crear_objeto(propiedad_dto, MapeadorPropiedad())
 
     def obtener_todos(self) -> list[Propiedad]:

@@ -45,8 +45,6 @@ def suscribirse_a_comandos(app=None):
         while True:
             mensaje = consumidor.receive()
             print(f'Comando recibido: {mensaje.value().data}')
-
-            print(mensaje.value().data.numero_catastral)
             ejecutar_proyeccion(ProyeccionRegistrarPropiedad(
                 ProyeccionRegistrarPropiedad.ADD,
                 mensaje.value().data.nombre,

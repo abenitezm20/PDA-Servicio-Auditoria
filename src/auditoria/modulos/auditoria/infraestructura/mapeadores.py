@@ -9,11 +9,11 @@ class MapeadorPropiedad(Mapeador):
 
     def entidad_a_dto(self, entidad: Propiedad) -> PropiedadDTO:
         propiedad_dto = PropiedadDTO(
-            entidad.id,
             entidad.nombre,
             entidad.coordenadas,
             entidad.direccion,
-            entidad.fecha_creacion
+            entidad.fecha_creacion,
+            entidad.propiedad_id
         )
 
         return propiedad_dto
@@ -24,6 +24,7 @@ class MapeadorPropiedad(Mapeador):
             coordenadas=dto.coordenadas,
             direccion=dto.direccion,
             fecha_creacion=dto.fecha_creacion,
+            propiedad_id=dto.propiedad_id
         )
         
         return propiedad
