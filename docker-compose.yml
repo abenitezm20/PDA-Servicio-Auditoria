@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: pda
+      POSTGRES_USER: laad
+      POSTGRES_PASSWORD: ladd
+  pulsar:
+    image: apachepulsar/pulsar:latest
+    container_name: pulsar-standalone
+    ports:
+      - "6650:6650"
+      - "8080:8080"
+    volumes:
+      - ./data:/pulsar/data
+    command: bin/pulsar standalone

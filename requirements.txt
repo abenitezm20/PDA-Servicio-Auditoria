@@ -1,0 +1,8 @@
+Flask==3.0.2
+gunicorn==21.2.0
+psycopg2==2.9.9
+pulsar-client==3.4.0
+pulsar-client[avro]==3.4.0
+PyDispatcher==2.0.7
+python-dotenv==1.0.1
+SQLAlchemy==2.0.27
