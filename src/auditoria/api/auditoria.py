@@ -20,7 +20,7 @@ def obtener_propiedad(id=None):
     else:
         return Response({'message': 'GET'})
 
-@ba.route('/async-auditoria', methods=['POST'])
+@ba.route('/auditoria/propiedad', methods=['POST'])
 def registrar_propiedad_async():
     map_propiedad = MapeadorPropiedadDTOJson()
     propiedad_dto = map_propiedad.externo_a_dto(request.json)
