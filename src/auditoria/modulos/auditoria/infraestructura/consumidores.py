@@ -55,11 +55,11 @@ def suscribirse_a_comandos(app=None):
             # ), app=app)
             ejecutar_proyeccion(ProyeccionRegistrarPropiedad(
                 ProyeccionRegistrarPropiedad.ADD,
-                'casas rojas',
-                "{'lat':123, 'lng':456}",
-                'cll 127 N 32 - 43',
-                '2024-01-01',
-                mensaje.value().data.id_propiedad
+                nombre='casas rojas',
+                coordenadas="{'lat':123, 'lng':456}",
+                direccion='cll 127 N 32 - 43',
+                fecha_creacion='2024-01-01',
+                id_propiedad=mensaje.value().data.id_propiedad
             ), app=app)
 
             consumidor.acknowledge(mensaje)
