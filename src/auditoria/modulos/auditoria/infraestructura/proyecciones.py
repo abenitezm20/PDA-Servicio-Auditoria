@@ -21,13 +21,14 @@ class ProyeccionRegistrarPropiedad(ProyeccionPropiedad):
     DELETE = 2
     UPDATE = 3
 
-    def __init__(self, operacion, nombre, coordenadas, direccion, fecha_creacion):
+    def __init__(self, operacion, nombre, coordenadas, direccion, fecha_creacion, id_propiedad):
         self.operacion = operacion
         self.nombre = nombre
         self.coordenadas = coordenadas
         self.direccion = direccion
         self.fecha_creacion = fecha_creacion
         self.fecha_actualizacion = fecha_creacion
+        self.propiedad_id = id_propiedad
 
     def ejecutar(self, db=None):
         if not db:
@@ -42,7 +43,8 @@ class ProyeccionRegistrarPropiedad(ProyeccionPropiedad):
         propiedad = Propiedad(nombre=self.nombre,
                               coordenadas=self.coordenadas,
                               direccion=self.direccion,
-                              fecha_creacion=self.fecha_creacion)
+                              fecha_creacion=self.fecha_creacion,
+                              propiedad_id=self.propiedad_id)
         print('propiedad: ', propiedad)
         repositorio.agregar(propiedad)
         db.commit()

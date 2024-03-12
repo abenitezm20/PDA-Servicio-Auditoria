@@ -11,7 +11,7 @@ class Propiedad(AgregacionRaiz):
     direccion: str = field(default=str)
     fecha_creacion: str = field(default=str)
     fecha_actualizacion: str = field(default=str)
-    propiedad_id: str = str(uuid.uuid4())
+    propiedad_id: str = field(default=str)
     
     def registrar_propiedad(self, propiedad: Propiedad):
 

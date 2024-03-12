@@ -20,7 +20,7 @@ def suscribirse_a_eventos():
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('eventos-auditoria', consumer_type=_pulsar.ConsumerType.Shared,
+        consumidor = cliente.subscribe('eventos-auditoria-creada', consumer_type=_pulsar.ConsumerType.Shared,
                                        subscription_name='pda-sub-eventos', schema=AvroSchema(EventoRegistroPropiedadCreada))
 
         while True:
@@ -40,17 +40,26 @@ def suscribirse_a_comandos(app=None):
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('comandos-auditoria', consumer_type=_pulsar.ConsumerType.Shared,
+        consumidor = cliente.subscribe('comandos-crear-auditoria', consumer_type=_pulsar.ConsumerType.Shared,
                                        subscription_name='pda-sub-comandos', schema=AvroSchema(ComandoRegistrarPropiedad))
         while True:
             mensaje = consumidor.receive()
             print(f'Comando recibido: {mensaje.value().data}')
+            # ejecutar_proyeccion(ProyeccionRegistrarPropiedad(
+            #     ProyeccionRegistrarPropiedad.ADD,
+            #     mensaje.value().data.nombre,
+            #     mensaje.value().data.coordenadas,
+            #     mensaje.value().data.direccion,
+            #     mensaje.value().data.fecha_creacion,
+            #     mensaje.value().data.id_propiedad
+            # ), app=app)
             ejecutar_proyeccion(ProyeccionRegistrarPropiedad(
                 ProyeccionRegistrarPropiedad.ADD,
-                mensaje.value().data.nombre,
-                mensaje.value().data.coordenadas,
-                mensaje.value().data.direccion,
-                mensaje.value().data.fecha_creacion
+                'casas rojas',
+                "{'lat':123, 'lng':456}",
+                'cll 127 N 32 - 43',
+                '2024-01-01',
+                mensaje.value().data.id_propiedad
             ), app=app)
 
             consumidor.acknowledge(mensaje)
