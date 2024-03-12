@@ -11,3 +11,7 @@ class PropiedadRegistrada(EventoDominio):
     direccion: str = None
     fecha_creacion: str = None
     fecha_actualizacion: str = None
+
+@dataclass
+class PropiedadAuditoriaReversada(EventoDominio):
+    propiedad_id: str = None

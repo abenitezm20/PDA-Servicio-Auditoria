@@ -9,3 +9,9 @@ class RegistroPropiedadPayload(Record):
 
 class EventoRegistroPropiedadCreada(EventoIntegracion):
     data = RegistroPropiedadPayload()
+
+class EventoCrearPropiedadFallidoPayload(Record):
+    id_propiedad = String()
+
+class EventoCrearPropiedadFallido(EventoIntegracion):
+    data = EventoCrearPropiedadFallidoPayload()

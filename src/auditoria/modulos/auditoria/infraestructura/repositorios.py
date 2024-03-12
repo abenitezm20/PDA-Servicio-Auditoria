@@ -31,4 +31,5 @@ class RepositorioPropiedadSQL(RepositorioPropiedad):
         ...
 
     def eliminar(self, propiedad_id: UUID):
-        ...
+        propiedad_dto = db_session.query(PropiedadDTO).filter_by(propiedad_id=str(propiedad_id)).delete()
+        db_session.add(propiedad_dto)

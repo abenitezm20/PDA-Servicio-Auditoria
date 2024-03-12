@@ -1,7 +1,7 @@
 import pulsar
 from pulsar.schema import *
 
-from src.auditoria.modulos.auditoria.infraestructura.schema.v1.eventos import EventoRegistroPropiedadCreada, RegistroPropiedadPayload
+from src.auditoria.modulos.auditoria.infraestructura.schema.v1.eventos import EventoRegistroPropiedadCreada,RegistroPropiedadPayload, EventoCrearPropiedadFallido, EventoCrearPropiedadFallidoPayload
 from src.auditoria.modulos.auditoria.infraestructura.schema.v1.comandos import ComandoRegistrarPropiedad, ComandoRegistrarPropiedadPayload
 from src.auditoria.seedwork.infraestructura import utils
 
@@ -46,3 +46,13 @@ class Despachador:
         comando_integracion = ComandoRegistrarPropiedad(data=payload)
         self._publicar_mensaje(comando_integracion, topico,
                                AvroSchema(ComandoRegistrarPropiedad))
+        
+    def publicar_compensacion(self, evento, topico):
+        # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del evento
+        payload = EventoCrearPropiedadFallidoPayload(
+            id_propiedad=str(evento.propiedad_id)
+        )
+        evento_integracion = EventoCrearPropiedadFallido(data=payload)
+        self._publicar_mensaje(evento_integracion, topico,
+                               AvroSchema(EventoCrearPropiedadFallido))
+    

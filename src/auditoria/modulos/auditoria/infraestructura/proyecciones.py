@@ -1,5 +1,5 @@
 from src.auditoria.modulos.auditoria.dominio.entidades import Propiedad
-from src.auditoria.modulos.auditoria.dominio.eventos import PropiedadRegistrada
+from src.auditoria.modulos.auditoria.dominio.eventos import PropiedadRegistrada, PropiedadAuditoriaReversada
 from src.auditoria.modulos.auditoria.infraestructura.fabricas import FabricaRepositorio
 from src.auditoria.modulos.auditoria.infraestructura.repositorios import RepositorioPropiedadSQL
 from src.auditoria.seedwork.infraestructura.proyecciones import Proyeccion, ProyeccionHandler
@@ -36,29 +36,43 @@ class ProyeccionRegistrarPropiedad(ProyeccionPropiedad):
             return
 
         print('Ejecutando proyección de auditoria...')
-        time.sleep(2)
+
         fabrica_repositorio = FabricaRepositorio()
-        repositorio = fabrica_repositorio.crear_objeto(
-            RepositorioPropiedadSQL.__class__)
-        propiedad = Propiedad(nombre=self.nombre,
-                              coordenadas=self.coordenadas,
-                              direccion=self.direccion,
-                              fecha_creacion=self.fecha_creacion,
-                              propiedad_id=self.propiedad_id)
-        print('propiedad: ', propiedad)
-        repositorio.agregar(propiedad)
-        db.commit()
-
-        evento = PropiedadRegistrada(propiedad_id=propiedad.propiedad_id,
-                                             nombre=propiedad.nombre,
-                                             coordenadas=propiedad.coordenadas,
-                                             direccion=propiedad.direccion,
-                                             fecha_creacion=propiedad.fecha_creacion)
+        repositorio = fabrica_repositorio.crear_objeto(RepositorioPropiedadSQL.__class__)
         despachador = Despachador()
-        despachador.publicar_evento(evento, 'eventos-auditoria-creada')
-        print('Proyección de auditoria ejecutada!')
 
+        if self.operacion == self.ADD:
+            time.sleep(2)
+            
+            propiedad = Propiedad(nombre=self.nombre,
+                                coordenadas=self.coordenadas,
+                                direccion=self.direccion,
+                                fecha_creacion=self.fecha_creacion,
+                                propiedad_id=self.propiedad_id)
 
+            repositorio.agregar(propiedad)
+            db.commit()
+
+            evento = PropiedadRegistrada(propiedad_id=propiedad.propiedad_id,
+                                                nombre=propiedad.nombre,
+                                                coordenadas=propiedad.coordenadas,
+                                                direccion=propiedad.direccion,
+                                                fecha_creacion=propiedad.fecha_creacion)
+
+            despachador.publicar_evento(evento, 'eventos-auditoria-creada')
+            print('Proyección de auditoria ejecutada!')
+            return
+        
+        elif self.operacion == self.DELETE:
+            print('Ejecutando proyección compensación de auditoria')
+            time.sleep(2)
+            repositorio.eliminar(self.propiedad_id)
+            db.commit()
+            evento = PropiedadAuditoriaReversada(id_propiedad=self.propiedad_id,)
+            despachador.publicar_compensacion(
+                evento, 'eventos-auditoria-fallida')
+            print('Proyección de compensación auditoria ejecutada!')
+            return
 
 
 class ProyeccionPropiedadHandler(ProyeccionHandler):
