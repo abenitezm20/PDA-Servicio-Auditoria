@@ -25,11 +25,8 @@ class Despachador:
     def publicar_evento(self, evento, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del evento
         payload = RegistroPropiedadPayload(
-            propiedad_id=str(evento.id),
-            nombre=str(evento.nombre),
-            coordenadas=str(evento.coordenadas),
-            direccion=str(evento.direccion),
-            fecha_creacion=str(evento.fecha_creacion)
+            id_propiedad=str(evento.propiedad_id),
+            numero_contrato=str(11223344)
         )
         evento_integracion = EventoRegistroPropiedadCreada(data=payload)
         self._publicar_mensaje(evento_integracion, topico,

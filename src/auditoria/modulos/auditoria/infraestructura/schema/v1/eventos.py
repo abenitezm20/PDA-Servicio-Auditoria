@@ -4,6 +4,7 @@ from src.auditoria.seedwork.infraestructura.schema.v1.eventos import EventoInteg
 
 class RegistroPropiedadPayload(Record):
     id_propiedad = String()
+    numero_contrato = String()
 
 
 class EventoRegistroPropiedadCreada(EventoIntegracion):

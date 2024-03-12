@@ -5,10 +5,7 @@ from src.auditoria.seedwork.infraestructura.schema.v1.comandos import (
 
 
 class ComandoRegistrarPropiedadPayload(Record):
-    nombre = String()
-    coordenadas = String()
-    direccion = String()
-    fecha_creacion = String()
+    id_propiedad = String()
 
 
 class ComandoRegistrarPropiedad(ComandoIntegracion):

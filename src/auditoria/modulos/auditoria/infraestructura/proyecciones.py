@@ -55,7 +55,7 @@ class ProyeccionRegistrarPropiedad(ProyeccionPropiedad):
                                              direccion=propiedad.direccion,
                                              fecha_creacion=propiedad.fecha_creacion)
         despachador = Despachador()
-        despachador.publicar_evento(evento, 'eventos-auditoria')
+        despachador.publicar_evento(evento, 'eventos-auditoria-creada')
         print('Proyección de auditoria ejecutada!')
 
 
